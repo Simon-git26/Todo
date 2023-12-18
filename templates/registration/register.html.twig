@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <section class="ftco-section">
+        <div class="container">
+
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                    <h2 class="heading-section">Registration</h2>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="login-wrap p-0">
+
+                        <!-- Formulaire -->
+                        {{ form_start(registrationForm) }}
+                            <!-- Email -->
+                            <div class="form-group">
+                                {{ form_row(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_row(registrationForm.username, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_row(registrationForm.motDePasse, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+
+                            <div class="form-group">
+                                <button type="submit" class="form-control btn btn-primary submit px-3" style="color: #fff !important;">S'enregistrer</button>
+                            </div>
+                            
+                            
+                        {{ form_end(registrationForm) }}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+{% endblock %}

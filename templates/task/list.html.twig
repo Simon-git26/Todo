@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TaskController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code><a href="{{ 'C:/MAMP/htdocs/Todo/Todo/src/Controller/TaskController.php'|file_link(0) }}">src/Controller/TaskController.php</a></code></li>
+        <li>Your template at <code><a href="{{ 'C:/MAMP/htdocs/Todo/Todo/templates/task/list.html.twig'|file_link(0) }}">templates/list/index.html.twig</a></code></li>
+    </ul>
+
+
+    
+    <a href="{{ path('app_task_create') }}" class="btn btn-info pull-right">Créer une tâche</a>
+    <div class="row">
+        {% for task in tasks %}
+        <div class="col-sm-4 col-lg-4 col-md-4">
+            <div class="thumbnail">
+                <div class="caption">
+                    <h4 class="pull-right">
+                        {% if task.isDone %}<span class="glyphicon glyphicon-ok"></span>{% else %}<span class="glyphicon glyphicon-remove"></span>{% endif %}
+                    </h4>
+                    <h4><a href="{{ path('app_task_edit', {'slug' : task.slug }) }}">{{ task.title }}</a></h4>
+                    <p>{{ task.content }}</p>
+                </div>
+               
+                <div>
+                    <!-- Formulaire pour le marquague comme fait ou non-->
+                    <form action="{{ path('app_task_toggle', {'id' : task.id }) }}">
+                        <button class="btn btn-success btn-sm pull-right">
+                            {% if not task.isDone %}Marquer comme faite{% else %}Marquer non terminée{% endif %}
+                        </button>
+                    </form>
+
+                    <!-- Formulaire pour la suprression -->
+                    <form action="{{ path('app_task_delete', {'id' : task.id }) }}">
+                        <button class="btn btn-danger btn-sm pull-right">Supprimer</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                Il n'y a pas encore de tâche enregistrée. <a href="{{ path('app_task_create') }}" class="btn btn-warning pull-right">Créer une tâche</a>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

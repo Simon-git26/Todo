@@ -29,6 +29,12 @@ class Task
      */
     private $title;
 
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $slug;
+
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="Vous devez saisir du contenu.")
@@ -72,6 +78,8 @@ class Task
     {
         $this->title = $title;
 
+        $this->slug = urlencode($title);
+
         return $this;
     }
 
@@ -102,5 +110,17 @@ class Task
     public function toggle($flag)
     {
         $this->isDone = $flag;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }

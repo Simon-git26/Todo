@@ -53,7 +53,7 @@
                     <!-- Formulaire pour la suprression -->
                     <!-- Bouton supprimer uniquement si username du user connecté == username du user rattaché a la tache -->
                     <!-- Bouton supprimer uniquement si user connecté == ROLE ADMIN et que user rataché a la tache == null -->
-                    {% if (is_granted('ROLE_ADMIN') and task.user == null) or (app.user.id == task.user.id) %}
+                    {% if (is_granted('ROLE_ADMIN') and task.user == null) or (task.user != null and app.user.username == task.user.username) %}
                         <form action="{{ path('app_task_delete', {'id' : task.id }) }}">
                             <button class="btn btn-danger btn-sm pull-right">Supprimer</button>
                         </form>

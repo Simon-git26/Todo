@@ -69,7 +69,7 @@ class TaskController extends AbstractController
 
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
-            return $this->redirectToRoute('app_task_list');
+            return $this->redirectToRoute('app_default');
         }
 
         return $this->render('task/create.html.twig', [

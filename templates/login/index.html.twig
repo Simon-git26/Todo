@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
 <style>
@@ -14,13 +14,20 @@
 
             <div class="row justify-content-center">
                 <div class="col-md-6 text-center mb-5">
-                    <h2 class="heading-section">Login</h2>
+                    <h2 class="heading-section">Connexion</h2>
                 </div>
             </div>
 
             <div class="row justify-content-center">
                 <div class="col-md-6 col-lg-4">
                     <div class="login-wrap p-0">
+
+                        <!-- Si user déja connecté -->
+                        {% if app.user %}
+                            <div class="mb-3">
+                                Vous êtes connecté en tant que : {{ app.user.username }}
+                            </div>
+                        {% endif %}
 
                         <!-- Formulaire -->
                         <form action="{{ path('app_login') }}" method="post" class="signin-form">

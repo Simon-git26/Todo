@@ -47,6 +47,9 @@ class TaskController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             
+            // Récupérer l'id du user connecté
+            $userConnected = $this->getUser();
+            $task->setUser($userConnected);
 
             $this->entityManager->persist($task);
             $this->entityManager->flush();

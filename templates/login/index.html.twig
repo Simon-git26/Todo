@@ -22,6 +22,10 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="login-wrap p-0">
 
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+
                         <!-- Si user déja connecté -->
                         {% if app.user %}
                             <div class="mb-3">

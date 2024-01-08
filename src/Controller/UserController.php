@@ -21,6 +21,8 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 // ********** Login ************ Afficher le formulaire de connexion
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 
 
@@ -38,6 +40,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/users", name="app_user_list")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function listAction(ManagerRegistry $doctrine)
     {

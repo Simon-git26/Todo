@@ -108,6 +108,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/delete", name="app_task_delete")
      */
+    /*
     public function deleteTaskAction(Task $task)
     {
         $this->entityManager->remove($task);
@@ -117,4 +118,25 @@ class TaskController extends AbstractController
 
         return $this->redirectToRoute('app_task_list');
     }
+    */
+
+
+
+    public function deleteTaskAction(Task $task)
+    {
+        // Suppression de taches possible si user connecté === user_id de la tache OU si user anonyme = tache et que user connecté == admin
+        if ( $task->getUser() === $this->getUser() || ($task->getUser() === null && $this->isGranted('ROLE_ADMIN'))) {
+            
+            $this->entityManager->remove($task);
+            $this->entityManager->flush();
+
+            $this->addFlash('success', 'La tâche a bien été supprimée.');
+
+            return $this->redirectToRoute('app_task_list');
+        } else {
+            $this->addFlash('success', 'Vous navez pas les droits pour supprimer cette tâche.');
+            return $this->redirectToRoute('app_task_list');
+        }
+    }
+
 }

@@ -11,8 +11,22 @@
 <div class="example-wrapper">
  
     <a href="{{ path('app_task_create') }}" class="btn btn-info pull-right">Créer une tâche</a>
+
+    <pre>
+        <!-- User connecte -->
+        {{ dump(app.user) }}
+    </pre>
+
     <div class="row">
         {% for task in tasks %}
+
+        
+        <pre>
+            
+            {{ dump(task) }}
+        </pre>
+        
+
         <div class="col-sm-4 col-lg-4 col-md-4">
             <div class="thumbnail">
                 <div class="caption">
@@ -31,10 +45,18 @@
                         </button>
                     </form>
 
+                    
+
                     <!-- Formulaire pour la suprression -->
-                    <form action="{{ path('app_task_delete', {'id' : task.id }) }}">
-                        <button class="btn btn-danger btn-sm pull-right">Supprimer</button>
-                    </form>
+                    <!-- Bouton supprimer uniquement si username du user connecté == username du user rattaché a la tache -->
+                    <!-- Bouton supprimer uniquement si user connecté == ROLE ADMIN et que user rataché a la tache == null -->
+                    {% if (is_granted('ROLE_ADMIN') and task.user == null) or (app.user.username == task.user.username) %}
+                        <form action="{{ path('app_task_delete', {'id' : task.id }) }}">
+                            <button class="btn btn-danger btn-sm pull-right">Supprimer</button>
+                        </form>
+                    {% endif %}
+
+
                 </div>
 
             </div>

@@ -45,6 +45,17 @@ class TaskControllerTest extends WebTestCase
     }
 
 
+    // Lister les taches is_done
+    public function testlistEndingAction()
+    {
+        $this->loginUser();
+
+        $this->client->request('GET', '/tasks/ending');
+
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+    }
+
+
     // Création de la tache
     public function testCreateAction()
     {

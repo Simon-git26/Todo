@@ -46,7 +46,7 @@ class UserControllerTest extends WebTestCase
         $form['user[password][first]'] = 'adminusercreate';
         $form['user[password][second]'] = 'adminusercreate';
         $form['user[email]'] = 'usercreate@test.org';
-        $form['user[roles][0]']->tick();
+        $form['user[roles][]'] = 'ROLE_ADMIN';
         $this->client->submit($form);
 
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
@@ -71,7 +71,8 @@ class UserControllerTest extends WebTestCase
         $form['user[password][first]'] = 'nouveaumodifie';
         $form['user[password][second]'] = 'nouveaumodifie';
         $form['user[email]'] = 'modifie@modifie.org';
-        $form['user[roles][0]']->tick();
+        // $form['user[roles][0]']->tick();
+        $form['user[roles][]'] = 'ROLE_ADMIN';
         $this->client->submit($form);
 
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());

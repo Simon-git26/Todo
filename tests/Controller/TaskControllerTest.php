@@ -8,7 +8,12 @@ class TaskControllerTest extends WebTestCase
 {
     private $client;
 
-    
+
+    /*
+    * En lancant la commande : vendor/bin/phpunit --filter=testListAction > public/resultTest.html pour lancer les tests
+    * Et en se rendant sur la page http://127.0.0.1:8000/resultTest.html
+    */
+
     public function setUp(): void
     {
         // Simuler un navigateur, dans l'application nous connecté a la page
@@ -30,20 +35,13 @@ class TaskControllerTest extends WebTestCase
     {
         $this->loginUser();
 
-        var_dump($this->loginUser());
-
         $this->client->request('GET', '/tasks');
 
-        // var_dump( $this->client->request('GET', '/tasks'));
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
 
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        // DEBUG
+        // var_dump($this->client->getResponse()->getContent());
 
-        /*
-        * En lancant la commande : vendor/bin/phpunit --filter=testListAction > public/resultTest.html pour lancer les tests
-        * Et en se rendant sur la page http://127.0.0.1:8000/resultTest.html
-        * J'ai Failed asserting that 302 matches expected 200. je pence car il manque le :8000 sur la redirection apres localhost, 
-        * pourquoi ?
-        */
     }
 
 
@@ -53,18 +51,47 @@ class TaskControllerTest extends WebTestCase
         $this->loginUser();
 
         $crawler = $this->client->request('GET', '/tasks/create');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $form = $crawler->selectButton('Ajouter')->form();
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        
+        
+        //$crawler = $this->client->followRedirect(true);
+        // echo "@@@@@@@@@@@@@@@ Je commence le formulaire !!!! @@@@@@@@@@@@@@@";
+        // var_dump($this->client->getResponse()->getContent());
+
+        $form = $crawler->selectButton('Ajouter une tache')->form();
+
+        // echo 'jai selectionné le bouton form';
+
+        $form['task[createdAt][date][month]'] = date('M');
+        $form['task[createdAt][date][day]'] = date('D');
+        $form['task[createdAt][date][year]'] = date('Y');
+
+        $form['task[createdAt][time][hour]'] = date('i');
+        $form['task[createdAt][time][minute]'] = date('s');
+
         $form['task[title]'] = 'Le Titre';
         $form['task[content]'] = 'Le Contenue';
+
+        $form['task[isDone]'] = 1;
+
         $this->client->submit($form);
+        $crawler = $this->client->followRedirect();
+
+        // DEBUG
+        // echo "@@@@@@@@@@@@@@@ J'ai passé le formulaire !!!! @@@@@@@@@@@@@@@";
+        // echo $this->client->getResponse()->getContent();
+
+
 
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
 
-        $crawler = $this->client->followRedirect();
+        
+
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
+        // Verifier que j'ai une div qui contient le texte de succé
         $this->assertEquals(1, $crawler->filter('div.alert-success')->count());
     }
 

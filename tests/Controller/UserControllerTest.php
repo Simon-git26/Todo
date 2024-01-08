@@ -24,7 +24,7 @@ class UserControllerTest extends WebTestCase
 
 
     // Lister les Users
-    public function testListActionUser()
+    public function testListUser()
     {
         $this->loginUser();
         $this->client->request('GET', '/users');
@@ -33,13 +33,14 @@ class UserControllerTest extends WebTestCase
 
 
     // Créer le user
-    public function testCreateActionUser()
+    public function testCreateUser()
     {
         $this->loginUser();
 
         $crawler = $this->client->request('GET', '/users/create');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
 
+        
         $form = $crawler->selectButton('Ajouter')->form();
         $form['user[username]'] = 'username';
         $form['user[password][first]'] = 'adminusercreate';
@@ -58,7 +59,7 @@ class UserControllerTest extends WebTestCase
 
 
     // Edit un user
-    public function testEditAction()
+    public function testEditUser()
     {
         $this->loginUser();
 

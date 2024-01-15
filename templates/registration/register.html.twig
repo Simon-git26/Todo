@@ -8,20 +8,36 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
+
+
+
+
 <div class="example-wrapper">
-    <section class="ftco-section">
-        <div class="container">
 
-            <div class="row justify-content-center">
-                <div class="col-md-6 text-center mb-5">
-                    <h2 class="heading-section">S'enregistrer</h2>
-                </div>
-            </div>
+    <!-- Section: Design Block -->
+    <section class="text-center text-lg-start">
+        <style>
+            .cascading-right {
+            margin-right: -50px;
+            }
 
-            <div class="row justify-content-center">
-                <div class="col-md-6 col-lg-4">
-                    <div class="login-wrap p-0">
+            @media (max-width: 991.98px) {
+            .cascading-right {
+                margin-right: 0;
+            }
+            }
+        </style>
 
+        <!-- Jumbotron -->
+        <div class="container py-4">
+            <div class="row g-0 align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="card cascading-right" style="
+                    background: hsla(0, 0%, 100%, 0.55);
+                    backdrop-filter: blur(30px);
+                    ">
+                    <div class="card-body p-5 shadow-5 text-center">
+                        <h2 class="fw-bold mb-5">S'enregistrer !</h2>
                         <!-- Formulaire -->
                         {{ form_start(registrationForm) }}
                             <!-- Email -->
@@ -44,12 +60,19 @@
                             
                             
                         {{ form_end(registrationForm) }}
-
                     </div>
                 </div>
             </div>
+
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <img src="{{ asset('img/test.jpg') }}" class="w-100 rounded-4 shadow-4" alt="todo list" />
+            </div>
+
+            </div>
         </div>
+        <!-- Jumbotron -->
     </section>
+    <!-- Section: Design Block -->
 </div>
 
 

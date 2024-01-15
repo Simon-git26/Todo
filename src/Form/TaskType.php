@@ -20,7 +20,10 @@ class TaskType extends AbstractType
             ->add('createdAt', DatetimeType::class, ['label' => "Crée le :"])
             ->add('title', TextType::class, ['label' => "Titre :"])
             ->add('content', TextareaType::class, ['label' => "Contenu :"])
-            ->add('isDone', CheckboxType::class, ['label' => "Terminé :"])
+            ->add('isDone', CheckboxType::class, [
+                'label' => "Terminé :",
+                'required' => false,
+            ])
         ;
     }
 

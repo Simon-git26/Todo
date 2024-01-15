@@ -42,9 +42,9 @@ class Task
     private $content;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
-    private $isDone;
+    private $isDone = 0;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tasks")

@@ -4,20 +4,44 @@
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    body{color: #000;overflow-x: hidden;height: 100%;background-image: url({{ asset('img/todolist_homepage.jpg') }});background-repeat: no-repeat;background-size: 100% 100%}.card{padding: 30px 40px;margin-top: 60px;margin-bottom: 60px;border: none !important;box-shadow: 0 6px 12px 0 rgba(0,0,0,0.2)}.blue-text{color: #00BCD4}.form-control-label{margin-bottom: 0}input, textarea, button{padding: 8px 15px;border-radius: 5px !important;margin: 5px 0px;box-sizing: border-box;border: 1px solid #ccc;font-size: 18px !important;font-weight: 300}input:focus, textarea:focus{-moz-box-shadow: none !important;-webkit-box-shadow: none !important;box-shadow: none !important;border: 1px solid #00BCD4;outline-width: 0;font-weight: 400}.btn-block{text-transform: uppercase;font-size: 15px !important;font-weight: 400;height: 43px;cursor: pointer}.btn-block:hover{color: #fff !important}button:focus{-moz-box-shadow: none !important;-webkit-box-shadow: none !important;box-shadow: none !important;outline-width: 0}
 </style>
 
-<div class="example-wrapper">
-   
 
-    <div class="row">
-        {{ form_start(form, {'action' : path('app_task_edit', { 'slug' : task.slug })}) }}
-            {{ form_widget(form) }}
+<div class="container-fluid px-1 py-5 mx-auto">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+            <div class="card" style="background-color: rgba(255,255,255,0.96);box-shadow: 5px 5px 10px gray;border-radius: 10px;">
+                <h5 class="text-center mb-4">Modifier une tache</h5>
 
-            <button type="submit" class="btn btn-success pull-right">Modifier</button>
-        {{ form_end(form) }}
+                <!-- Formulaire -->
+                {{ form_start(form, {'action' : path('app_task_edit', { 'slug' : task.slug })}) }}
+    
+                    <!-- Date -->
+                    <div class="form-group">
+                        {{ form_row(form.createdAt, {'attr': {'class': 'd-flex justify-content-center'}}) }}
+                    </div>
+
+                    <!-- Titre -->
+                    <div class="form-group">
+                        {{ form_row(form.title, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <!-- Contenu -->
+                    <div class="form-group">
+                        {{ form_row(form.content, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <!-- isDone -->
+                    <div class="form-group">
+                        {{ form_row(form.isDone, {'attr': {'class': 'form-control '}}) }}
+                    </div>
+
+                    <button type="submit" class="btn btn-success pull-right">Modifier</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
     </div>
-
 </div>
+
 {% endblock %}

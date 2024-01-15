@@ -2,7 +2,7 @@
 
 {% block header_img %}{% endblock %}
 
-{% block header_title %}<h1>Liste des utilisateurs</h1>{% endblock %}
+{% block header_title %}<h1 class="mt-4">Liste des utilisateurs</h1>{% endblock %}
 
 {% block body %}
     {% if users|length == 0 %}
@@ -10,8 +10,8 @@
             Il n'y a pas encore d'utilisateur enregistré. <a href="{{ path('app_user_create') }}" class="btn btn-warning pull-right">Créer un utilisateur</a>
         </div>
     {% else %}
-        <div class="row">
-            <table class="table">
+        <div class="row" >
+            <table class="table" style="box-shadow:5px 5px 10px gray; border-radius:8px;">
                 <thead>
                 <tr>
                     <th>#</th>
@@ -21,16 +21,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for user in users %}
-                    <tr>
-                        <th scope="row">{{ loop.index }}</th>
-                        <td>{{ user.username }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>
-                            <a href="{{ path('app_user_edit', {'id' : user.id}) }}" class="btn btn-success btn-sm">Modifier</a>
-                        </td>
-                    </tr>
-                {% endfor %}
+                    {% for user in users %}
+                        <tr>
+                            <th scope="row">{{ loop.index }}</th>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                <a href="{{ path('app_user_edit', {'id' : user.id}) }}" class="btn btn-success btn-sm">Modifier</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

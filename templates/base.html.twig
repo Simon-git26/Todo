@@ -34,10 +34,12 @@
 
         <!-- Page Content -->
         <div class="container">
-            <div class="row">
+
+            <div class="row mt-2 mb-2">
+            
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('app_user_create') }}" class="btn btn-primary">Créer un utilisateur</a>
-                    <a href="{{ path('app_user_list') }}" class="btn btn-warning mr-2">Liste d'utilisateur</a>
+                    <a href="{{ path('app_user_create') }}" class="mr-2 btn btn-primary">Créer un utilisateur</a>
+                    <a href="{{ path('app_user_list') }}" class="mr-2 btn btn-warning mr-2">Liste d'utilisateur</a>
                 {% endif %}
 
 
@@ -46,9 +48,11 @@
                 {% endif %}
 
 
-                {% if not app.user and 'login' != app.request.attributes.get('_route') %}
-                    <a href="{{ path('app_login') }}" class="btn btn-success">Se connecter</a>
+                {% if not app.user %}
+                    <a href="{{ path('app_login') }}" class="mr-2 btn btn-success">Se connecter</a>
+                    <a href="{{ path('app_login') }}" class="mr-2 btn btn-success">S'enregistrer</a>
                 {% endif %}
+
             </div>
 
             <div class="row">

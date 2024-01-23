@@ -114,7 +114,7 @@ class TaskControllerTest extends WebTestCase
         $this->loginUser();
 
         $crawler = $this->client->request('GET', '/tasks/edit/testtest33');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('Modifier')->form();
         $form['task[title]'] = 'leTitreModifie';

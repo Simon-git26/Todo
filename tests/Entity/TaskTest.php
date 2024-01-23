@@ -39,7 +39,7 @@ class TaskTest extends WebTestCase
         $this->task->setIsDone(true);
         $this->task->toggle(true);
         $this->assertSame(true, $this->task->getIsDone());
-        $this->assertSame(true, $this->task->isDone());
+        $this->assertSame(true, $this->task->isIsDone());
     }
 
     public function testCreatedAt()

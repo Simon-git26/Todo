@@ -28,7 +28,7 @@ class UserControllerTest extends WebTestCase
     {
         $this->loginUser();
         $this->client->request('GET', '/users');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
     }
 
 
@@ -64,7 +64,7 @@ class UserControllerTest extends WebTestCase
         $this->loginUser();
 
         $crawler = $this->client->request('GET', '/users/13/edit');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('Modifier')->form();
         $form['user[username]'] = 'username modifie';

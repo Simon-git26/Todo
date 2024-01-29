@@ -3,6 +3,7 @@
 namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 class TaskControllerTest extends WebTestCase
 {
@@ -33,15 +34,22 @@ class TaskControllerTest extends WebTestCase
     // Lister les taches
     public function testTasksList()
     {
+        /*
         $this->loginUser();
 
         $this->client->request('GET', '/tasks');
-
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->client->followRedirect(true);
+        */
+        //var_dump($this->client->getResponse()->getContent());
 
-        // DEBUG
-        // var_dump($this->client->getResponse()->getContent());
+        $this->loginUser();
 
+        $this->client->request('GET', '/tasks');
+        // $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->client->followRedirect();
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
 
@@ -53,6 +61,10 @@ class TaskControllerTest extends WebTestCase
         $this->client->request('GET', '/tasks/ending');
 
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+
+        $this->client->followRedirect(true);
+
+        //var_dump($this->client->getResponse()->getContent());
     }
 
 
@@ -65,32 +77,34 @@ class TaskControllerTest extends WebTestCase
 
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
         
-        
-        //$crawler = $this->client->followRedirect(true);
-        //echo "@@@@@@@@@@@@@@@ Je commence le formulaire !!!! @@@@@@@@@@@@@@@";
-        //var_dump($this->client->getResponse()->getContent());
+        $crawler = $this->client->followRedirect(true);
 
-        $form = $crawler->selectButton('Ajouter une tache')->form();
 
-        // echo 'jai selectionné le bouton form';
+        echo "@@@@@@@@@@@@@@@ Je commence le formulaire !!!! @@@@@@@@@@@@@@@";
+        // var_dump($this->client->getResponse()->getContent());
 
-        $form['task[createdAt][date][month]'] = date('M');
-        $form['task[createdAt][date][day]'] = date('D');
-        $form['task[createdAt][date][year]'] = date('Y');
+        $formTache = $crawler->selectButton('Ajouter une tache')->form();
+
+        $formTache['task[createdAt][date][month]'] = date('M');
+        $formTache['task[createdAt][date][day]'] = date('D');
+        $formTache['task[createdAt][date][year]'] = date('Y');
 
         $form['task[createdAt][time][hour]'] = date('i');
         $form['task[createdAt][time][minute]'] = date('s');
 
-        $form['task[title]'] = 'Le Titre';
-        $form['task[content]'] = 'Le Contenue';
+        $formTache['task[title]'] = 'Le Titre';
+        $formTache['task[content]'] = 'Le Contenue';
 
-        $form['task[isDone]'] = 1;
+        $formTache['task[isDone]'] = 1;
 
-        $this->client->submit($form);
-        $crawler = $this->client->followRedirect();
+        $this->client->submit($formTache);
+        $crawler = $this->client->followRedirect(true);
 
 
-        //$this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        echo "@@@@@@@@@@@@@@@ dump de mon form @@@@@@@@@@@@@@@";
+        var_dump($formTache);
+        echo "@@@@@@@@@@@@@@@ Jai passé le formulaire !!!! @@@@@@@@@@@@@@@";
+
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 

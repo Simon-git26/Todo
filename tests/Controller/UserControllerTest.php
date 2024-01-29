@@ -19,7 +19,7 @@ class UserControllerTest extends WebTestCase
     {
         $crawler = $this->client->request('GET', '/login');
         $form = $crawler->selectButton('Se connecter')->form();
-        $this->client->submit($form, ['_username' => 'simoncestmoi@hotmail.fr', '_password' => 'adminadmin']);
+        $this->client->submit($form, ['_username' => 'simoncestmoi@hotmail.fr', '_password' => 'Adminadmin']);
     }
 
 

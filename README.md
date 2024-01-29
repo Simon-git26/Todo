@@ -35,6 +35,6 @@ Project 8: Améliorez une application existante de ToDo & Co
    
         symfony server:start
         
+        
 9. Tests
-
         vendor/bin/phpunit --filter=(Nom de la fonction à tester) > public/resultTest.html

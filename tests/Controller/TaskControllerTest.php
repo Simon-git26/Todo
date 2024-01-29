@@ -89,10 +89,6 @@ class TaskControllerTest extends WebTestCase
         $this->client->submit($form);
         $crawler = $this->client->followRedirect();
 
-        // DEBUG
-        // echo "@@@@@@@@@@@@@@@ J'ai passé le formulaire !!!! @@@@@@@@@@@@@@@";
-        // echo $this->client->getResponse()->getContent();
-
 
         //$this->assertEquals(302, $this->client->getResponse()->getStatusCode());
 

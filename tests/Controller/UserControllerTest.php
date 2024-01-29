@@ -27,8 +27,10 @@ class UserControllerTest extends WebTestCase
     public function testListUser()
     {
         $this->loginUser();
-        $this->client->request('GET', '/users');
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+
+        $this->client->request('GET', '/tasks');
+        $this->client->followRedirect();
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
 

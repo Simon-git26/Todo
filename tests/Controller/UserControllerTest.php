@@ -4,60 +4,104 @@ namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+use Symfony\Component\HttpFoundation\Response;
+
 
 class UserControllerTest extends WebTestCase
 {
 
+    /*
+    * En lancant la commande : vendor/bin/phpunit --filter=testListAction > public/resultTest.html pour lancer les tests
+    * Et en se rendant sur la page http://127.0.0.1:8000/resultTest.html
+    */
+    
     private $client;
+    private $urlGenerator;
+
 
     public function setUp(): void
     {
+        // Simuler un navigateur, dans l'application nous connecté a la page
         $this->client = static::createClient();
     }
+    
 
+    // Connexion user et verification de la redirection sur la page accueil
     public function loginUser(): void
     {
-        $crawler = $this->client->request('GET', '/login');
-        $form = $crawler->selectButton('Se connecter')->form();
-        $this->client->submit($form, ['_username' => 'simoncestmoi@hotmail.fr', '_password' => 'Adminadmin']);
+        /** @var UrlGeneratorInterface $urlGenerator */
+        $this->urlGenerator = $this->client->getContainer()->get("router");
+
+        $crawler = $this->client->request('GET', $this->urlGenerator->generate('app_login'));
+
+        // Recuperer le Formulaire grace à son name et generer les données
+        $form = $crawler->filter("form[name=login]")->form([
+            '_username' => 'simoncestmoi@hotmail.fr',
+            '_password' => 'Adminadmin'
+        ]);
+
+        // Soumettre le formulaire
+        $this->client->submit($form);
+
+        // Je m'attend a : Une redirection (vers la page accueil)
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+       
+        // Suivre cette redirection
+        $this->client->followRedirect();
+
+        // Verifier si la route obtenue est la meme que celle attendu
+        $this->assertRouteSame('app_default');
+        
     }
 
 
-    // Lister les Users
+    // Lister les Users, ne fonctionne que si ROLE ADMIN
     public function testListUser()
     {
         $this->loginUser();
 
-        $this->client->request('GET', '/tasks');
-        $this->client->followRedirect();
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->client->request('GET', $this->urlGenerator->generate('app_user_list'));
+        
+        // Je m'attend a : Un statut 200
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        
+        // Verifier si la route obtenue est la meme que celle attendu
+        $this->assertRouteSame('app_user_list');
     }
 
 
-    // Créer le user
+    // Créer un User
     public function testCreateUser()
     {
         $this->loginUser();
 
-        $crawler = $this->client->request('GET', '/users/create');
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $crawler = $this->client->request('GET', $this->urlGenerator->generate('app_user_create'));
 
-        
-        $form = $crawler->selectButton('Ajouter')->form();
-        $form['user[username]'] = 'username';
-        $form['user[password][first]'] = 'adminusercreate';
-        $form['user[password][second]'] = 'adminusercreate';
-        $form['user[email]'] = 'usercreate@test.org';
-        $form['user[roles][]'] = 'ROLE_ADMIN';
-        $this->client->submit($form);
+        // Recuperer le Formulaire grace à son name et generer les données
+        $formUser = $crawler->filter("form[name=user]")->form([
+            'user[username]' => 'UserTest',
+            'user[password][first]' => 'Password',
+            'user[password][second]' => 'Password',
+            'user[email]' => 'testfonctionnel@test.com',
+        ]);
 
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
 
-        $crawler = $this->client->followRedirect();
+        // Soumettre le formulaire
+        $this->client->submit($formUser);
 
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->filter('div.alert-success')->count());
+        // Je m'attend a : Une redirection
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+       
+        // Suivre cette redirection
+        $this->client->followRedirect();
+
+        // Verifier si la route obtenue est la meme que celle attendu
+        $this->assertRouteSame('app_user_list');
+
+        // Verifier que j'ai une div qui contient le texte de succé
+        $this->assertSelectorExists('div.alert.alert-success');
     }
+    
 
 
     // Edit un user
@@ -65,23 +109,33 @@ class UserControllerTest extends WebTestCase
     {
         $this->loginUser();
 
-        $crawler = $this->client->request('GET', '/users/13/edit');
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $crawler = $this->client->request('GET', '/users/3/edit');
 
-        $form = $crawler->selectButton('Modifier')->form();
-        $form['user[username]'] = 'username modifie';
-        $form['user[password][first]'] = 'nouveaumodifie';
-        $form['user[password][second]'] = 'nouveaumodifie';
-        $form['user[email]'] = 'modifie@modifie.org';
-        // $form['user[roles][0]']->tick();
-        $form['user[roles][]'] = 'ROLE_ADMIN';
-        $this->client->submit($form);
+        // Recuperer le Formulaire grace à son name et generer les données
+        $formEditUser = $crawler->filter("form[name=user]")->form([
+            'user[username]' => 'UserTest',
+            'user[password][first]' => 'Passwordtest',
+            'user[password][second]' => 'Passwordtest',
+            'user[email]' => 'testmodifieuser@user.com',
+            'user[roles][0]' => 'ROLE_ADMIN',
+        ]);
 
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        // Soumettre le formulaire
+        $this->client->submit($formEditUser);
 
-        $crawler = $this->client->followRedirect();
+        // Je m'attend a : Une redirection
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+       
+        // Suivre cette redirection
+        $this->client->followRedirect();
 
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->filter('div.alert-success')->count());
+        // Verifier si la route obtenue est la meme que celle attendu
+        $this->assertRouteSame('app_user_list');
+
+        // Verifier que j'ai une div qui contient le texte de succé
+        $this->assertSelectorExists('div.alert.alert-success');
+
+
     }
+    
 }

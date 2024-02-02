@@ -54,7 +54,6 @@ class UserController extends AbstractController
 
 
 
-
     /**
      * @Route("/users/create", name="app_user_create")
      */

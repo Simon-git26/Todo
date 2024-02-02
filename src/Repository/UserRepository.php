@@ -71,6 +71,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     //        ;
     //    }
 
+    /*
     public function findOneByEmail($value): ?User
     {
         return $this->createQueryBuilder('c')
@@ -80,4 +81,5 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getOneOrNullResult()
         ;
     }
+    */
 }

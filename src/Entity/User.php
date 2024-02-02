@@ -47,7 +47,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity=Task::class, mappedBy="task_id")
+     * @ORM\OneToMany(targetEntity=Task::class, mappedBy="user")
      */
     private $tasks;
 

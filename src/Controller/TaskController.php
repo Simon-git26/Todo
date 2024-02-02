@@ -114,27 +114,13 @@ class TaskController extends AbstractController
 
         $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
 
-        return $this->redirectToRoute('app_task_list');
+        return $this->redirectToRoute('app_task_list_ending');
     }
 
 
     /**
      * @Route("/tasks/{id}/delete", name="app_task_delete")
      */
-    /*
-    public function deleteTaskAction(Task $task)
-    {
-        $this->entityManager->remove($task);
-        $this->entityManager->flush();
-
-        $this->addFlash('success', 'La tâche a bien été supprimée.');
-
-        return $this->redirectToRoute('app_task_list');
-    }
-    */
-
-
-
     public function deleteTaskAction(Task $task)
     {
         // Suppression de taches possible si user connecté === user_id de la tache OU si user anonyme = tache et que user connecté == admin
@@ -145,9 +131,9 @@ class TaskController extends AbstractController
 
             $this->addFlash('success', 'La tâche a bien été supprimée.');
 
-            return $this->redirectToRoute('app_task_list');
+            return $this->redirectToRoute('app_default');
         } else {
-            $this->addFlash('success', 'Vous navez pas les droits pour supprimer cette tâche.');
+            $this->addFlash('success', 'Vous n\'avez pas les droits pour supprimer cette tâche.');
             return $this->redirectToRoute('app_task_list');
         }
     }

@@ -5,132 +5,33 @@ namespace App\Tests\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 use Symfony\Component\HttpFoundation\Response;
-// use Symfony\Component\BrowserKit\Response;
-
-use App\Repository\UserRepository;
 
 class TaskControllerTest extends WebTestCase
 {
     
+    /*
+    * En lancant la commande : vendor/bin/phpunit --filter=testListAction > public/resultTest.html pour lancer les tests
+    * Et en se rendant sur la page http://127.0.0.1:8000/resultTest.html
+    */
+    
     private $client;
+    private $urlGenerator;
+
+
+    public function setUp(): void
+    {
+        // Simuler un navigateur, dans l'application nous connecté a la page
+        $this->client = static::createClient();
+    }
     
-    /*
-    public function testAuthPageIsRestricted(): void
+
+    // Connexion user et verification de la redirection sur la page accueil
+    public function loginUser(): void
     {
-        // Simuler un navigateur, dans l'application nous connecté a la page
-        $client = static::createClient();
-        $client->request('GET',  '/login');
-        $this->assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
-    }
-
-
-    public function testRedirectToLogin(): void
-    {
-        // Simuler un navigateur, dans l'application nous connecté a la page
-        $client = static::createClient();
-        $client->request('GET',  '/login');
-        $this->assertResponseRedirects('/login');
-    }
-    */
-
-    
-    /*public function testDisplayLogin()
-    {
-        // Simuler un navigateur, dans l'application nous connecté a la page
-        $this->client = static::createClient();
-
-        $this->client->request('GET',  '/login');
-        
-        // Je m'attend à avoir un code status 200
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-
-        // Je m'attend à avoir un element h2 value Se connnecter !
-        $this->assertSelectorTextContains('h2', 'Se connecter !');
-
-        // Je ne doit pas avoir de class danger
-        $this->assertSelectorNotExists('.alert.alert-danger');
-    }*/
-
-
-    // Login qui n'existe pas
-    /*public function testLoginWithBadCredentials()
-    {
-        $this->client = static::createClient();
-        $crawler =  $this->client->request('GET',  '/login');
-
-        $form = $crawler->selectButton('Se connecter')->form([
-            '_username' => 'simoncestmoi@hotmail.fr',
-            '_password' => 'existepas'
-        ]);
-        
-        $this->client->submit($form);
-
-        $this->assertResponseRedirects('/login');
-        $this->client->followRedirect();
-
-        $this->assertSelectorExists('.alert.alert-danger');
-    }*/
-
-
-    // Login existant qui se connecte
-    /*
-    public function testSuccessFullLogin()
-    {
-        $this->client = static::createClient();
-        $crawler =  $this->client->request('GET',  '/login');
-
-        // Je m'attend à avoir un code status 200
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-        
-        // Je m'attend à avoir un element h2 value Se connnecter !
-        $this->assertSelectorTextContains('h2', 'Se connecter !');
-
-        $form = $crawler->selectButton('Se connecter')->form([
-            '_username' => 'simoncestmoi@hotmail.fr',
-            '_password' => 'Adminadmin'
-        ]);
-
-        $this->client->submit($form);
-    }
-    */
-
-
-
-
-    // Login existant qui se connecte
-    /*
-    * Recuperer la route du login
-    * Soumettre le formulaire
-    * Etre redirigé sur la page accueil, ce qui voudra dire qu'on s'est bien connecté
-    */
-    /*
-    public function testSuccessFullLogin()
-    {
-
-        $this->client = static::createClient();
-        $userRepository = static::getContainer()->get(UserRepository::class);
-
-        // retrieve the test user
-        $testUser = $userRepository->findOneByEmail('simoncestmoi@hotmail.fr');
-
-        // simulate $testUser being logged in
-        $this->client->loginUser($testUser);
-
-        // tester d'aller sur ma page d'accueil
-        $this->client->request('GET', '/');
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h4', 'Bienvenue sur Todo List, l\'application vous permettant de gérer l\'ensemble de vos tâches !');
-    }
-    */
-
-    public function testSuccessFullLogin()
-    {
-        $this->client = static::createClient();
-        
         /** @var UrlGeneratorInterface $urlGenerator */
-        $urlGenerator = $this->client->getContainer()->get("router");
+        $this->urlGenerator = $this->client->getContainer()->get("router");
 
-        $crawler = $this->client->request('GET', $urlGenerator->generate('app_login'));
+        $crawler = $this->client->request('GET', $this->urlGenerator->generate('app_login'));
 
         // Recuperer le Formulaire grace à son name et generer les données
         $form = $crawler->filter("form[name=login]")->form([
@@ -149,195 +50,172 @@ class TaskControllerTest extends WebTestCase
 
         // Verifier si la route obtenue est la meme que celle attendu
         $this->assertRouteSame('app_default');
-
-    }
-
-
-
-    // Login existant qui se connecte
-    /*public function testTasksList()
-    {
-
-        // $this->testSuccessFullLogin();
-
-        $this->client = static::createClient();
-
-        $this->client->request('GET', '/tasks');
-
-
-        // Je m'attend à avoir un code status 200
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         
-        // Je m'attend à avoir un element h2 value Se connnecter !
-        $this->assertSelectorTextContains('a', 'Créer une tâche');
-
-        // Je ne doit pas avoir de class danger
-        $this->assertSelectorNotExists('.alert.alert-danger');
-    }*/
-
-
-
-    /*
-    * En lancant la commande : vendor/bin/phpunit --filter=testListAction > public/resultTest.html pour lancer les tests
-    * Et en se rendant sur la page http://127.0.0.1:8000/resultTest.html
-    */
-
-    /*
-    public function setUp(): void
-    {
-        // Simuler un navigateur, dans l'application nous connecté a la page
-        $this->client = static::createClient();
     }
-    
 
-    // Connexion user
-    public function loginUser(): void
+
+    // Login qui n'existe pas
+    public function testLoginWithBadCredentials()
     {
-        $crawler = $this->client->request('GET', '/login');
-        $form = $crawler->selectButton('Se connecter')->form();
-        $this->client->submit($form, ['_username' => 'simoncestmoi@hotmail.fr', '_password' => 'Adminadmin']);
 
-        $this->client->request('GET', '/');
+        /** @var UrlGeneratorInterface $urlGenerator */
+        $this->urlGenerator = $this->client->getContainer()->get("router");
+
+        $crawler = $this->client->request('GET', $this->urlGenerator->generate('app_login'));
+
+        // Recuperer le Formulaire grace à son name et generer les données
+        $form = $crawler->filter("form[name=login]")->form([
+            '_username' => 'simoncestmoi@hotmail.fr',
+            '_password' => 'existepas'
+        ]);
+
+        // Soumettre le formulaire
+        $this->client->submit($form);
+
+        // Je m'attend a : Une redirection (vers la page accueil)
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+       
+        // Suivre cette redirection
         $this->client->followRedirect();
-        
+
+        // Verifier si la route obtenue est celle du login, ce qui veut dire invalid credentials
+        $this->assertRouteSame('app_login');
+
+        $this->assertSelectorExists('.alert.alert-danger');
     }
-    */
 
 
     // Lister les taches
-    /*public function testTasksList()
+    public function testTasksList()
     {
-        /*
         $this->loginUser();
 
-        $this->client->request('GET', '/tasks');
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
-        $this->client->followRedirect(true);
-        */
-        //var_dump($this->client->getResponse()->getContent());
-
-        /*$this->loginUser();
-
-        $this->client->request('GET', '/tasks');
-        // $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
-        $this->client->followRedirect();
-
+        $this->client->request('GET', $this->urlGenerator->generate('app_task_list'));
+        
+        // Je m'attend a : Un statut 200
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-    }*/
+        
+        // Verifier si la route obtenue est la meme que celle attendu
+        $this->assertRouteSame('app_task_list');
+    }
 
 
     // Lister les taches is_done
-    /*public function testlistEndingAction()
+    public function testListEndingAction()
     {
         $this->loginUser();
 
-        $this->client->request('GET', '/tasks/ending');
-
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
-
-        $this->client->followRedirect(true);
-
-        //var_dump($this->client->getResponse()->getContent());
-    }*/
+        $this->client->request('GET', $this->urlGenerator->generate('app_task_list_ending'));
+        
+        // Je m'attend a : Un status 200
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        
+        // Verifier si la route obtenue est la meme que celle attendu
+        $this->assertRouteSame('app_task_list_ending');
+    }
 
 
     // Création de la tache
-    /*public function testCreateAction()
+    public function testCreateAction()
     {
         $this->loginUser();
 
-        $crawler = $this->client->request('GET', '/tasks/create');
+        $crawler = $this->client->request('GET', $this->urlGenerator->generate('app_task_create'));
 
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
-        
-        $crawler = $this->client->followRedirect(true);
+        // Recuperer le Formulaire grace à son name et generer les données
+        $formTache = $crawler->filter("form[name=task]")->form([
+            'task[title]' => 'Le Titre',
+            'task[content]' => 'Le Contenue',
+        ]);
 
 
-        echo "@@@@@@@@@@@@@@@ Je commence le formulaire !!!! @@@@@@@@@@@@@@@";
-        // var_dump($this->client->getResponse()->getContent());
-
-        $formTache = $crawler->selectButton('Ajouter une tache')->form();
-
-        $formTache['task[createdAt][date][month]'] = date('M');
-        $formTache['task[createdAt][date][day]'] = date('D');
-        $formTache['task[createdAt][date][year]'] = date('Y');
-
-        $form['task[createdAt][time][hour]'] = date('i');
-        $form['task[createdAt][time][minute]'] = date('s');
-
-        $formTache['task[title]'] = 'Le Titre';
-        $formTache['task[content]'] = 'Le Contenue';
-
-        $formTache['task[isDone]'] = 1;
-
+        // Soumettre le formulaire
         $this->client->submit($formTache);
-        $crawler = $this->client->followRedirect(true);
 
+        // Je m'attend a : Une redirection (vers la page accueil)
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+       
+        // Suivre cette redirection
+        $this->client->followRedirect();
 
-        echo "@@@@@@@@@@@@@@@ dump de mon form @@@@@@@@@@@@@@@";
-        var_dump($formTache);
-        echo "@@@@@@@@@@@@@@@ Jai passé le formulaire !!!! @@@@@@@@@@@@@@@";
-
-
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        // Verifier si la route obtenue est la meme que celle attendu
+        $this->assertRouteSame('app_default');
 
         // Verifier que j'ai une div qui contient le texte de succé
-        $this->assertEquals(1, $crawler->filter('div.alert-success')->count());
-    }*/
-
+        $this->assertSelectorExists('div.alert.alert-success');
+    }
 
 
     // Modification de la tache
-    /*public function testEditAction()
+    public function testEditAction()
     {
         $this->loginUser();
 
-        $crawler = $this->client->request('GET', '/tasks/edit/testtest33');
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        // Faire passé mon slug
+        $crawler = $this->client->request('GET', '/tasks/edit/Le+Titre');
 
-        $form = $crawler->selectButton('Modifier')->form();
-        $form['task[title]'] = 'leTitreModifie';
-        $form['task[content]'] = 'leContenueModifie';
-        $this->client->submit($form);
+        // Recuperer le Formulaire grace à son name et generer les données
+        $formEdit = $crawler->filter("form[name=task]")->form([
+            'task[title]' => 'Le Titre en edit',
+            'task[content]' => 'Le Contenue en edit',
+        ]);
 
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        // Soumettre le formulaire
+        $this->client->submit($formEdit);
 
-        $crawler = $this->client->followRedirect();
+        // Je m'attend a : Une redirection
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+       
+        // Suivre cette redirection
+        $this->client->followRedirect();
 
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->filter('div.alert-success')->count());
-    }*/
+        // Verifier si la route obtenue est la meme que celle attendu
+        $this->assertRouteSame('app_task_list');
 
+        // Verifier que j'ai une div qui contient le texte de succé
+        $this->assertSelectorExists('div.alert.alert-success');
+    }
 
     // Marquée comme faite ou non
-    /*public function testToggleTaskAction(): void
+    public function testToggleTaskAction(): void
     {
         $this->loginUser();
 
-        $this->client->request('GET', '/tasks/4/toggle');
+        $this->client->request('GET', '/tasks/13/toggle');
 
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
 
-        $crawler = $this->client->followRedirect();
+        // Je m'attend a : Une redirection (vers la page accueil)
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+       
+        // Suivre cette redirection
+        $this->client->followRedirect();
 
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->filter('div.alert-success')->count());
+        // Verifier si la route obtenue est la meme que celle attendu
+        $this->assertRouteSame('app_task_list_ending');
 
-    }*/
+        // Verifier que j'ai une div qui contient le texte de succé
+        $this->assertSelectorExists('div.alert.alert-success');
 
+    }
+    
 
     // Delete la tache
-    /*public function testDeleteTaskAction()
+    public function testDeleteTaskAction()
     {
         $this->loginUser();
 
-        $this->client->request('GET', '/tasks/5/delete');
+        $this->client->request('GET', '/tasks/15/delete');
 
-        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        // Je m'attend a : Une redirection (vers la page accueil)
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+       
+        // Suivre cette redirection
+        $this->client->followRedirect();
 
-        $crawler = $this->client->followRedirect();
+        // Verifier si la route obtenue est la meme que celle attendu
+        $this->assertRouteSame('app_default');
 
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertEquals(1, $crawler->filter('div.alert-success')->count());
-    }*/
+        // Verifier que j'ai une div qui contient le texte de succé
+        $this->assertSelectorExists('div.alert.alert-success');
+    }
 }

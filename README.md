@@ -5,8 +5,8 @@ Project 8: Améliorez une application existante de ToDo & Co
 
 ## Pre-requisites
 - [Link](https://symfony.com/doc/5.x/setup.html#technical-requirements) verifier les exigences requises par Symfony
-- PHP 7.2.5 minimum
-- MySQL 5.7 minimum
+
+- PHP 7.2.5 minimum / MySQL 5.7 minimum
 
 ## Installation
 

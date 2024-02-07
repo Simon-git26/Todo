@@ -3,7 +3,7 @@ language: php
 
 # php version
 php:
-  - '7.4'
+  - '8.3'
 
 # Allows use container-based infrastructure
 sudo: false
@@ -25,7 +25,7 @@ test:
 # Update composer
 before-install:
   - composer self-update
-  - composer install --prefer-source --no-interaction --dev
+  - composer install --prefer-source --no-interaction
 
 # Install composer dependencies,
 # Create database, schema and fixtures

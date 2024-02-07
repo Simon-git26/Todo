@@ -105,11 +105,12 @@ class UserControllerTest extends WebTestCase
 
 
     // Edit un user
+    
     public function testEditUser()
     {
         $this->loginUser();
 
-        $crawler = $this->client->request('GET', '/users/18/edit');
+        $crawler = $this->client->request('GET', '/users/6/edit');
 
         // Recuperer le Formulaire grace à son name et generer les données
         $formEditUser = $crawler->filter("form[name=user]")->form([
@@ -134,8 +135,35 @@ class UserControllerTest extends WebTestCase
 
         // Verifier que j'ai une div qui contient le texte de succé
         $this->assertSelectorExists('div.alert.alert-success');
-
-
     }
-    
+
+
+
+    // Créer un User method Register
+    public function testRegisterUser()
+    {
+        /** @var UrlGeneratorInterface $urlGenerator */
+        $this->urlGenerator = $this->client->getContainer()->get("router");
+
+        $crawler = $this->client->request('GET', $this->urlGenerator->generate('app_register'));
+
+        // Recuperer le Formulaire grace à son name et generer les données
+        $form = $crawler->filter("form[name=registration]")->form([
+            'registration[email]' => 'register@register.fr',
+            'registration[username]' => 'userRegister',
+            'registration[motDePasse]' => 'Registertest'
+        ]);
+
+        // Soumettre le formulaire
+        $this->client->submit($form);
+
+        // Je m'attend a : Une redirection (vers la page accueil)
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+       
+        // Suivre cette redirection
+        $this->client->followRedirect();
+
+        // Verifier si la route obtenue est la meme que celle attendu
+        $this->assertRouteSame('app_login');
+    }
 }

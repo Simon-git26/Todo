@@ -178,11 +178,12 @@ class TaskControllerTest extends WebTestCase
     }
 
     // Marquée comme faite ou non
+    
     public function testToggleTaskAction(): void
     {
         $this->loginUser();
 
-        $this->client->request('GET', '/tasks/19/toggle');
+        $this->client->request('GET', '/tasks/4/toggle');
 
 
         // Je m'attend a : Une redirection (vers la page accueil)
@@ -199,15 +200,17 @@ class TaskControllerTest extends WebTestCase
 
     }
     
+    
 
     // Delete la tache
+    
     
     
     public function testDeleteTaskAction()
     {
         $this->loginUser();
 
-        $this->client->request('GET', '/tasks/19/delete');
+        $this->client->request('GET', '/tasks/4/delete');
 
         // Je m'attend a : Une redirection (vers la page accueil)
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);

@@ -132,9 +132,6 @@ class TaskController extends AbstractController
             $this->addFlash('success', 'La tâche a bien été supprimée.');
 
             return $this->redirectToRoute('app_default');
-        } else {
-            $this->addFlash('success', 'Vous n\'avez pas les droits pour supprimer cette tâche.');
-            return $this->redirectToRoute('app_task_list');
         }
     }
 

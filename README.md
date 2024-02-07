@@ -24,6 +24,10 @@ Project 8: Améliorez une application existante de ToDo & Co
 
         php bin/console doctrine:database:create
 
+4.  Chargement des Fixtures
+
+        php bin/console doctrine:fixtures:load 
+
 5.  Créer vos entitées avec le MakerBundle
         
 6. Migrer vos tables en BDD
@@ -37,4 +41,6 @@ Project 8: Améliorez une application existante de ToDo & Co
         
         
 9. Tests
-        vendor/bin/phpunit --filter=(Nom de la fonction à tester) > public/resultTest.html
+        Configurez la connexion à votre BDD sur un fichier `.env.test.local`
+        Tester une methode en particulier : vendor/bin/phpunit --filter=(Nom de la fonction à tester) > public/resultTest.html
+        Obtenir le code coverage : vendor/bin/phpunit --coverage-html public/test-coverage

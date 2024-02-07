@@ -177,14 +177,13 @@ class TaskControllerTest extends WebTestCase
         $this->assertSelectorExists('div.alert.alert-success');
     }
 
-    // Marquée comme faite ou non
     
+    // Marquée comme faite ou non
     public function testToggleTaskAction(): void
     {
         $this->loginUser();
 
-        $this->client->request('GET', '/tasks/4/toggle');
-
+        $this->client->request('GET', '/tasks/5/toggle');
 
         // Je m'attend a : Une redirection (vers la page accueil)
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -203,14 +202,11 @@ class TaskControllerTest extends WebTestCase
     
 
     // Delete la tache
-    
-    
-    
     public function testDeleteTaskAction()
     {
         $this->loginUser();
 
-        $this->client->request('GET', '/tasks/4/delete');
+        $this->client->request('GET', '/tasks/5/delete');
 
         // Je m'attend a : Une redirection (vers la page accueil)
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -224,6 +220,5 @@ class TaskControllerTest extends WebTestCase
         // Verifier que j'ai une div qui contient le texte de succé
         $this->assertSelectorExists('div.alert.alert-success');
     }
-    
     
 }

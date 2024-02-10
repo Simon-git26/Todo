@@ -1,6 +1,6 @@
 # Contribuer à ToDoList
 
-Ce document décrit une utilisation de GitHub qui doit être utilisé lors de la contribution au projet [ToDoList](https://github.com/Simon-git26/Todo/tree/master).
+Ce document décrit une utilisation de GitHub pour les contributeurs au projet [ToDoList](https://github.com/Simon-git26/Todo/tree/master).
 
 Voici vos lignes directrices à respecter en tant que contributeurs :
 
@@ -48,7 +48,7 @@ Voici les lignes directrices pour soumettre une Pull Request :
    git push origin fixBug
    ```
 
-### Après la fusion de votre Pull Request
+### Après l'acceptation de votre Pull Request
 
 Vous pouvez supprimer votre branche :
 

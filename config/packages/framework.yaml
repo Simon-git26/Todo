@@ -17,6 +17,9 @@ framework:
     php_errors:
         log: true
 
+    messenger: # Ajout de la configuration messenger
+        reset_on_message: true # Définir à true pour eviter une deprecated
+
 when@test:
     framework:
         test: true

@@ -183,7 +183,7 @@ class TaskControllerTest extends WebTestCase
     {
         $this->loginUser();
 
-        $this->client->request('GET', '/tasks/5/toggle');
+        $this->client->request('GET', '/tasks/1/toggle');
 
         // Je m'attend a : Une redirection (vers la page accueil)
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -201,12 +201,13 @@ class TaskControllerTest extends WebTestCase
     
     
 
+    
     // Delete la tache
     public function testDeleteTaskAction()
     {
         $this->loginUser();
 
-        $this->client->request('GET', '/tasks/5/delete');
+        $this->client->request('GET', '/tasks/1/delete');
 
         // Je m'attend a : Une redirection (vers la page accueil)
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -220,5 +221,6 @@ class TaskControllerTest extends WebTestCase
         // Verifier que j'ai une div qui contient le texte de succé
         $this->assertSelectorExists('div.alert.alert-success');
     }
+    
     
 }

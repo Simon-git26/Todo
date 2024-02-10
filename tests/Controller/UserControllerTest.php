@@ -110,7 +110,7 @@ class UserControllerTest extends WebTestCase
     {
         $this->loginUser();
 
-        $crawler = $this->client->request('GET', '/users/8/edit');
+        $crawler = $this->client->request('GET', '/users/2/edit');
 
         // Recuperer le Formulaire grace à son name et generer les données
         $formEditUser = $crawler->filter("form[name=user]")->form([

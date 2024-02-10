@@ -183,7 +183,7 @@ class TaskControllerTest extends WebTestCase
     {
         $this->loginUser();
 
-        $this->client->request('GET', '/tasks/1/toggle');
+        $this->client->request('GET', '/tasks/5/toggle');
 
         // Je m'attend a : Une redirection (vers la page accueil)
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -207,7 +207,7 @@ class TaskControllerTest extends WebTestCase
     {
         $this->loginUser();
 
-        $this->client->request('GET', '/tasks/1/delete');
+        $this->client->request('GET', '/tasks/5/delete');
 
         // Je m'attend a : Une redirection (vers la page accueil)
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);

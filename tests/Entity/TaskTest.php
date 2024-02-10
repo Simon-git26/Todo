@@ -55,4 +55,12 @@ class TaskTest extends WebTestCase
         $this->assertInstanceOf(User::class, $this->task->getUser());
     }
 
+    public function testSetSlug()
+    {
+        $slug = 'test-slug';
+        $this->task->setSlug($slug);
+
+        $this->assertEquals($slug, $this->task->getSlug());
+    }
+
 }

@@ -1,7 +1,6 @@
 # Contribuer à ToDoList
 
-Ce document décrit le wokflow git qui doit être utilisé lors de la contribution au projet ToDolist sur GitHub.
-Il décrit une utilisation de GitHub pour contribuer au projet [ToDoList](https://github.com/Simon-git26/Todo/tree/master)
+Ce document décrit une utilisation de GitHub qui doit être utilisé lors de la contribution au projet [ToDoList](https://github.com/Simon-git26/Todo/tree/master).
 
 Voici vos lignes directrices à respecter en tant que contributeurs :
 

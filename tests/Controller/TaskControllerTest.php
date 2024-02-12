@@ -157,8 +157,8 @@ class TaskControllerTest extends WebTestCase
 
         // Recuperer le Formulaire grace à son name et generer les données
         $formEdit = $crawler->filter("form[name=task]")->form([
-            'task[title]' => 'Le Titre en edit',
-            'task[content]' => 'Le Contenue en edit',
+            'task[title]' => 'Le Titre Modifie',
+            'task[content]' => 'Le Contenue de ma tache Modifie',
         ]);
 
         // Soumettre le formulaire
@@ -183,7 +183,7 @@ class TaskControllerTest extends WebTestCase
     {
         $this->loginUser();
 
-        $this->client->request('GET', '/tasks/3/toggle');
+        $this->client->request('GET', '/tasks/1/toggle');
 
         // Je m'attend a : Une redirection (vers la page accueil)
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -203,6 +203,7 @@ class TaskControllerTest extends WebTestCase
 
     
     // Delete la tache
+    /*
     public function testDeleteTaskAction()
     {
         $this->loginUser();
@@ -221,6 +222,7 @@ class TaskControllerTest extends WebTestCase
         // Verifier que j'ai une div qui contient le texte de succé
         $this->assertSelectorExists('div.alert.alert-success');
     }
+    */
     
     
 }

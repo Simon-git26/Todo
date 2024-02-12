@@ -8,6 +8,10 @@ Project 8: Améliorez une application existante de ToDo & Co
 
 - PHP 7.2.5 minimum / MySQL 5.7 minimum
 
+## Informations
+
+Vous pouvez accéder aux informations de contribution en cliquant [ici](https://github.com/Simon-git26/Todo/blob/master/contribution.md)
+
 ## Installation
 
 1. Cloner le repository 
@@ -44,3 +48,22 @@ Project 8: Améliorez une application existante de ToDo & Co
         Configurez la connexion à votre BDD sur un fichier `.env.test.local`
         Tester une methode en particulier : vendor/bin/phpunit --filter=(Nom de la fonction à tester) > public/resultTest.html
         Obtenir le code coverage : vendor/bin/phpunit --coverage-html public/test-coverage
+
+### Informations concernant les tests
+
+  * Important:
+     * Il faut impérativement que [XDebug](https://xdebug.org/) soit installé afin que les tests unitaires et fonctionnels soit lancés correctement.
+ 
+ ## Outils utilisés
+
+  * [Symfony](https://symfony.com/)
+  * [Composer](https://getcomposer.org/)
+  * [Bootstrap](https://getbootstrap.com/)
+  * [Twig](https://twig.symfony.com/)
+  * [Phpunit](https://phpunit.de/)
+  * [Code Climate](https://codeclimate.com/)
+  * [Codacy](https://www.codacy.com/)
+  
+## Auteur
+
+  * Balleux Simon

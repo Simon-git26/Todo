@@ -42,7 +42,7 @@ class UserController extends AbstractController
      * @Route("/users", name="app_user_list")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function listAction(ManagerRegistry $doctrine)
+    public function listUsers(ManagerRegistry $doctrine)
     {
         $users = $doctrine->getRepository(User::class)->findAll();
 
@@ -57,7 +57,7 @@ class UserController extends AbstractController
     /**
      * @Route("/users/create", name="app_user_create")
      */
-    public function createAction(Request $request, UserPasswordHasherInterface $userPasswordHasher)
+    public function createUser(Request $request, UserPasswordHasherInterface $userPasswordHasher)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -94,7 +94,7 @@ class UserController extends AbstractController
     /**
      * @Route("/users/{id}/edit", name="app_user_edit")
      */
-    public function editAction(User $user, Request $request, UserPasswordHasherInterface $userPasswordHasher)
+    public function editUser(User $user, Request $request, UserPasswordHasherInterface $userPasswordHasher)
     {
         $form = $this->createForm(UserType::class, $user);
 

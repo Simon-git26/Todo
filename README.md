@@ -25,33 +25,33 @@ Vous pouvez accéder aux informations de contribution en cliquant [ici](https://
         composer install
         
 4. Créer votre BDD:
-      ```bash
+      ```
       php bin/console doctrine:database:create
       ```
 
-5.  Créer vos entités avec le MakerBundle
-        ```bash
-        php bin/console make:entity
-        ```
+5. Créer vos entités avec le MakerBundle
+      ```
+      php bin/console make:entity
+      ```
 
 6.  Generez les migrations
-        ```bash
+        ```
         php bin/console make:migration
         ```
       
-        ```bash
+        ```
         php bin/console doctrine:migrations:migrate
         ```
 
 7.  Chargement des Fixtures
 
-        ```bash
+        ```
         php bin/console doctrine:fixtures:load 
         ```
 
 8. Lancer le serveur Symfony
    
-        ```bash
+        ```
         symfony server:start
         ```  
 

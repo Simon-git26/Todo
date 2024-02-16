@@ -41,10 +41,11 @@
                             </form>
 
 
+                           
                             <!-- Formulaire pour la suprression -->
                             <!-- Bouton supprimer uniquement si username du user connecté == username du user rattaché a la tache -->
                             <!-- Bouton supprimer uniquement si user connecté == ROLE ADMIN et que user rataché a la tache == null -->
-                            {% if (is_granted('ROLE_ADMIN') and task.user == null) or (task.user != null and app.user.username == task.user.username) %}
+                            {% if (is_granted('ROLE_ADMIN') and task.user == null) or (task.user != null and app.user.email == task.user.email) %}
                                 <form class="ml-1" action="{{ path('app_task_delete', {'id' : task.id }) }}">
                                     <button class="btn btn-danger btn-sm pull-right">Supprimer</button>
                                 </form>

@@ -34,26 +34,26 @@ Vous pouvez accéder aux informations de contribution en cliquant [ici](https://
       php bin/console make:entity
       ```
 
-6.  Generez les migrations
-        ```
-        php bin/console make:migration
-        ```
+6. Generez les migrations
+      ```
+      php bin/console make:migration
+      ```
       
-        ```
-        php bin/console doctrine:migrations:migrate
-        ```
+      ```
+      php bin/console doctrine:migrations:migrate
+      ```
 
-7.  Chargement des Fixtures
+7. Chargement des Fixtures
 
-        ```
-        php bin/console doctrine:fixtures:load 
-        ```
+      ```
+      php bin/console doctrine:fixtures:load 
+      ```
 
 8. Lancer le serveur Symfony
    
-        ```
-        symfony server:start
-        ```  
+      ```
+      symfony server:start
+      ```  
 
 9. Tests
         Configurez la connexion à votre BDD sur un fichier `.env.test.local`

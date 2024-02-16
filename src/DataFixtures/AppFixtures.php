@@ -21,12 +21,25 @@ class AppFixtures extends Fixture
             $users = new User();
             $users->setUsername('Simon'.$i);
             $users->setEmail('simoncestmoi@hotmail.fr'.$i);
-            $users->setPassword('Admintest'.$i);
+            $users->setPassword('Usertest'.$i);
             $users->setRoles(['ROLES_USER']);
             $manager->persist($users);
             $this->setTasks($users, $manager);
         }
+        // Créer mon Admin
+        $this->createAdmin($manager);
+
         $manager->flush();
+    }
+
+    public function createAdmin(ObjectManager $manager): void
+    {
+        $userAdmin = new User();
+        $userAdmin->setUsername('Admin');
+        $userAdmin->setEmail('simoncestmoi@hotmail.fr');
+        $userAdmin->setPassword('Adminadmin');
+        $userAdmin->setRoles(['ROLES_ADMIN']);
+        $manager->persist($userAdmin);
     }
 
     private function setTasks(User $user, ObjectManager $manager) {

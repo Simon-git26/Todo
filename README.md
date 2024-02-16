@@ -20,39 +20,63 @@ Vous pouvez accéder aux informations de contribution en cliquant [ici](https://
 
 2. Configurez la connexion à votre BDD sur un fichier `.env.local`
 
-3. Installer les dependances
+3. Installer les dépendances
 
         composer install
         
-4.  Créer votre BDD
+4. Créer votre BDD:
+      ```bash
+      php bin/console doctrine:database:create
+      ```
 
-        php bin/console doctrine:database:create
+5.  Créer vos entités avec le MakerBundle
+        ```bash
+        php bin/console make:entity
+        ```
 
-4.  Chargement des Fixtures
-
-        php bin/console doctrine:fixtures:load 
-
-5.  Créer vos entitées avec le MakerBundle
-        
-6. Migrer vos tables en BDD
-
+6.  Generez les migrations
+        ```bash
         php bin/console make:migration
-        php bin/console doctrine:migrations:migrate 
+        ```
+      
+        ```bash
+        php bin/console doctrine:migrations:migrate
+        ```
+
+7.  Chargement des Fixtures
+
+        ```bash
+        php bin/console doctrine:fixtures:load 
+        ```
 
 8. Lancer le serveur Symfony
    
+        ```bash
         symfony server:start
-        
-        
+        ```  
+
 9. Tests
         Configurez la connexion à votre BDD sur un fichier `.env.test.local`
         Tester une methode en particulier : vendor/bin/phpunit --filter=(Nom de la fonction à tester) > public/resultTest.html
         Obtenir le code coverage : vendor/bin/phpunit --coverage-html public/test-coverage
 
+
+### Informations concernant la connexion
+  * Se connecter en tant que Role User :
+     * Email : simoncestmoi@hotmail.fr1 / Mot de passe : Usertest1
+
+  * Se connecter en tant que Role Admin :
+     * Email : simoncestmoi@hotmail.fr / Mot de passe : Adminadmin
+
+
 ### Informations concernant les tests
 
   * Important:
-     * Il faut impérativement que [XDebug](https://xdebug.org/) soit installé afin que les tests unitaires et fonctionnels soit lancés correctement.
+     * Il est important que l'extensions [XDebug](https://xdebug.org/) soit installé sur votre environnement de developpement afin que les tests unitaires et fonctionnels soit lancés correctement.
+
+     * L'extensions XDebug est utile au debogage en fournissant des fonctionnalités comme la générations de rapports d'erreurs détaillés pour faciliter le développement et l'optimisation du code. C'est pour cette raison que l'extension est importante afin de generer notre code coverage grâce à PhpUnit.
+
+     * Vous pouvez utiliser l'assitant [Assistant XDebug](https://xdebug.org/wizard) afin d'avoir une aide pour l'installation de son extension
  
  ## Outils utilisés
 

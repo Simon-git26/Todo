@@ -56,9 +56,9 @@ Vous pouvez accéder aux informations de contribution en cliquant [ici](https://
       ```  
 
 9. Tests
-        Configurez la connexion à votre BDD sur un fichier `.env.test.local`
-        Tester une methode en particulier : vendor/bin/phpunit --filter=(Nom de la fonction à tester) > public/resultTest.html
-        Obtenir le code coverage : vendor/bin/phpunit --coverage-html public/test-coverage
+  * Configurez la connexion à votre BDD sur un fichier `.env.test.local`
+  * Tester une methode en particulier : vendor/bin/phpunit --filter=(Nom de la fonction à tester) > public/resultTest.html
+  * Obtenir le code coverage : vendor/bin/phpunit --coverage-html public/test-coverage
 
 
 ### Informations concernant la connexion
@@ -72,9 +72,10 @@ Vous pouvez accéder aux informations de contribution en cliquant [ici](https://
 ### Informations concernant les tests
 
   * Important:
-     * Il est important que l'extensions [XDebug](https://xdebug.org/) soit installé sur votre environnement de developpement afin que les tests unitaires et fonctionnels soit lancés correctement.
+     * Il est important que l'extension [XDebug](https://xdebug.org/) soit installée sur votre environnement de developpement afin que les tests unitaires et fonctionnels soit lancés correctement.
 
-     * L'extensions XDebug est utile au debogage en fournissant des fonctionnalités comme la générations de rapports d'erreurs détaillés pour faciliter le développement et l'optimisation du code. C'est pour cette raison que l'extension est importante afin de generer notre code coverage grâce à PhpUnit.
+     * L'extensions XDebug est utile au debogage en fournissant des fonctionnalités comme la générations de rapports d'erreurs détaillés pour faciliter le développement et l'optimisation du code. 
+     * C'est pour cette raison que l'extension est importante afin de generer notre code coverage grâce à PhpUnit.
 
      * Vous pouvez utiliser l'assitant [Assistant XDebug](https://xdebug.org/wizard) afin d'avoir une aide pour l'installation de son extension
  
